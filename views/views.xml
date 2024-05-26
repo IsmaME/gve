@@ -1,0 +1,122 @@
+<odoo>
+  <data>
+    <!-- Vista arbol vehiculo-->
+
+    <record model="ir.ui.view" id="gve.vehiculo_list_view">
+      <field name="name">Lista de vehiculos</field>
+      <field name="model">gve.vehiculo</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="matricula" string="Matricula"/>
+          <field name="tipoVehiculo" string="Categoria"/>
+          <field name="marca" string="Marca"/>
+          <field name="modelo" string="Modelo"/>
+          <field name="puedeCircular" string="Apto para circular"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista arbol personas-->
+    <record model="ir.ui.view" id="gve.persona_list_view">
+      <field name="name">Lista de personas</field>
+      <field name="model">gve.persona</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="dni" string="DNI"/>
+          <field name="nombre" string="Nombre"/>
+          <field name="apellido" string="Apellido"/>
+          <field name="permisob" string="Permiso de conducir B"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- vista formulario-->
+    <record model="ir.ui.view" id="gve.vehiculo_form_view">
+    <field name="name">Formulario vehiculo</field>
+    <field name="model">gve.vehiculo</field>
+    <field name="arch" type="xml">
+    <form string="Formulario Vehiculo">
+      <sheet>
+        <group colspan="4">
+          <group>
+            <field name="imagenVehiculo" widget="image" options="{'preview_image': 'imagenVehiculo', 'size': [150, 150]}" nolabel="1"/>
+          </group>
+          <group colspan="2" col="2">
+          <!-- info general -->
+          <group string="Informacion general">
+            <field name="matricula"/>
+            <field name="tipoVehiculo"/>
+            <field name="marca"/>
+            <field name="modelo"/>
+            <field name="fechaProduccion"/>
+            <field name="fechaEntrada"/>
+            <field name="combustible"/>
+          </group>
+          <!-- Estado del vehiculo -->
+          <group string="Estado">
+            <field name="renting"/>
+            <field name="kilometraje"/>
+            <field name="averia"/>
+            <field name="tipoAveria"/>
+            <field name="descripcionAveria"/>
+            <field name="puedeCircular"/>
+          </group>
+          </group>
+          </group> 
+        <notebook>
+        <!-- tree persona en el form de vehiculo -->
+        <page string="persona">
+            <field name="persona">
+              <tree string="Personas">
+                <field name="dni" string="DNI"/>
+                <field name="nombre" string="Nombre"/>
+                <field name="apellido" string="Apellido"/>
+                <field name="permisob" string="Permiso de conducir B"/>
+              </tree>
+            </field>
+        </page>
+        <page string="anotaciones">
+          <field name="anotaciones"/>
+        </page>
+        </notebook>
+      </sheet>
+    </form>
+    </field>
+    </record>
+
+    <!-- accion al abrir el modelo vehiculo -->
+
+    <record model="ir.actions.act_window" id="gve.vehiculo_action_window">
+      <field name="name">Vehiculo</field>
+      <field name="res_model">gve.vehiculo</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- accion al abrir el modelo persona -->
+    <record model="ir.actions.act_window" id="gve.persona_action_window">
+      <field name="name">Persona</field>
+      <field name="res_model">gve.persona</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- informe -->
+    <report
+      id="gve.report_vehiculo"
+      model="gve.vehiculo"
+      string="Informe de vehiculos"
+      name="gve.report_vehiculos_view"
+      file="gve.report_vehiculos"
+      menu="True"
+      report_type="qweb-pdf"
+    />
+
+    <!-- Top menu item -->
+
+    <menuitem name="vehiculos" id="gve.vehiculo_menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Gestion vehiculos" id="gve.vehiculo_menu_1" parent="vehiculo_menu_root" action="gve.vehiculo_action_window"/>
+    <menuitem name="Gestion personas" id="gve.persona_menu_1" parent="vehiculo_menu_root" action="gve.persona_action_window"/>
+  </data>
+</odoo>

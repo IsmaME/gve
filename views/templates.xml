@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+      <template id="report_vehiculos_view">
+       <t t-set="docs" t-value="docs"/>
+       <t t-foreach="docs" t-as="doc">
+          <t t-call="web.html_container">
+                <t t-call="web.external_layout">    
+                    <div class="page">
+                         <img t-if="doc.imagenVehiculo" t-att-src="'data:image/png;base64,'+doc.imagenVehiculo.decode('utf-8')"/>
+                        <h3>Info general del vehiculo</h3>
+                        <table  class="table table-bordered table-striped">
+                            <tr>
+                                <th>Matricula</th>
+                                <th>Clase</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Produccion</th>
+                                <th>Entrada</th>
+                                <th>Combustible</th>
+                            </tr>
+                            <tr>
+                                <td><span t-field="doc.matricula"/></td>
+                                <td><span t-field="doc.tipoVehiculo"/></td>
+                                <td><span t-field="doc.marca"/></td>
+                                <td><span t-field="doc.modelo"/></td>
+                                <td><span t-field="doc.fechaProduccion"/></td>
+                                <td><span t-field="doc.fechaEntrada"/></td>
+                                <td><span t-field="doc.combustible"/></td>
+                            </tr>
+                            </table>
+                        <h3>Estado del vehiculo</h3>
+                        <table  class="table table-bordered table-striped">
+                            <tr>
+                                <th>Renting</th>
+                                <th>Segunda mano</th>
+                                <th>Kilometraje</th>
+                                <th>Averiado</th>
+                                <th>Tipo de av.</th>
+                                <th>descripcion av.</th>
+                                <th>Puede circular</th>
+                            </tr>
+                            <tr>
+                                <td><t t-esc="doc.renting and 'Sí' or 'No'"/></td>
+                                <td><span t-esc="doc.segundamano and 'Sí' or 'No'"/></td>
+                                <td><span t-field="doc.kilometraje"/></td>
+                                <td><t t-esc="doc.averia and 'Sí' or 'No'"/></td>
+                                <td><span t-field="doc.tipoAveria"/></td>
+                                <td><span t-field="doc.descripcionAveria"/></td>
+                                <td><t t-esc="doc.puedeCircular and 'Sí' or 'No'"/></td>
+                            </tr>
+                            </table>
+                            <h3>Personas Asignadas</h3>
+                            <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>DNI</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Permiso B</th>
+                                <th>Permiso C</th>
+                                <th>Permiso A</th>
+                            </tr>
+                            <t t-foreach="doc.persona" t-as="person">
+                                <tr>
+                                <td><span t-field="person.dni"/></td>
+                                <td><span t-field="person.nombre"/></td>
+                                <td><span t-field="person.apellido"/></td>
+                                <td><t t-esc="person.permisob and 'Sí' or 'No'"/></td>
+                                <td><t t-esc="person.permisoc and 'Sí' or 'No'"/></td>
+                                <td><t t-esc="person.permisoa and 'Sí' or 'No'"/></td>
+                                </tr>
+                            </t>
+                            </table>
+                            <h3>Anotaciones</h3>
+                            <p><span t-field="doc.anotaciones"/></p>
+                    </div>
+                </t>
+            </t>
+          </t>
+      </template>
+    </data>
+</odoo>
